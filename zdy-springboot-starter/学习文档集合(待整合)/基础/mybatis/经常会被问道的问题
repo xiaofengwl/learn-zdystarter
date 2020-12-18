@@ -1,0 +1,22 @@
+1、这里就是我们经常所说的sqlSession发送sql有两种方式，
+（1）通过通过getMapper先获取mapper，通过mapper发送；
+（2）通过sqlSession的selectOne发送；
+它两一种使用了动态代理，一种未使用，最终都是执行了selectOne
+
+2、mybatis的二级缓存的使用有几种方式：
+有两种方式使用mybatis二级缓存
+要求，在Mapper.xml配置
+<!--开启mybatis二级缓存-->
+    <cache type="com.zdy.mystarter.caches.mybatiscache.MybatisRedisCache"
+           eviction="FIFO"
+           flushInterval="60000"
+           size="65535"
+           readOnly="true">
+        <property name="key" value="com.zdy.mystarter.intergration.mapper.basic.BasicMapper"/>
+    </cache>
+
+    和   在Mapper.java类上使用注解：@CacheNamespace(implementation = MybatisRedisCache.class,size = 65535)
+
+    互斥的，必能同时使用！
+    否则在服务启动阶段，创建SqlSessionFactory的时候会报错。
+3、

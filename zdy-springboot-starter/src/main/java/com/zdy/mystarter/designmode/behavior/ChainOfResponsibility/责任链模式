@@ -1,0 +1,14 @@
+场景
+现实中，请假的OA申请，请假天数如果是半天到1天，可能直接主管批准即可；
+如果是1到3天的假期，需要部门经理批准；
+如果是3天到30天，则需要总经理审批；
+大于30天，正常不会批准。
+
+类图
+为了实现上述场景，我们可以采用责任链设计模式。
+
+员工提交请求类：LeaveRequest。
+抽象的请假责任处理类：AbstractLeaveHandler。
+直接主管审批处理类：DirectLeaderLeaveHandler。
+部门经理处理类：DeptManagerLeaveHandler。
+总经理处理类： GManagerLeaveHandler。

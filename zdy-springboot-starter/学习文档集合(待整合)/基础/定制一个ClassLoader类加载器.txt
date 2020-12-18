@@ -1,0 +1,8 @@
+第一步：
+ extends ClassLoader{
+第二步：
+ @Override
+ protected Class<?> findClass(String name) throws ClassNotFoundException {}
+
+
+ 请参考本工程中的：SpecilizationClassLoader.java  定制的类加载器

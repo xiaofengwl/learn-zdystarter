@@ -1,0 +1,25 @@
+Java程序在运行的时候,JVM通过类加载机制(ClassLoader)把class文件加载到内存中,
+只有class文件被载入内存,才能被其他class引用,使程序正确运行起来.
+
+Java中的ClassLoader有三种：Bootstrap ClassLoader 、Extension ClassLoader、App ClassLoader。
+
+1. Bootstrap ClassLoader
+由C++写的,由JVM启动.
+
+启动类加载器,负责加载java基础类，对应的文件是%JRE_HOME/lib/ 目录下的rt.jar、resources.jar、charsets.jar和class等
+
+2.Extension ClassLoader
+Java类,继承自URLClassLoader 扩展类加载器,
+
+对应的文件是 %JRE_HOME/lib/ext 目录下的jar和class等
+3.App ClassLoader
+Java类,继承自URLClassLoader 系统类加载器,
+
+对应的文件是应用程序classpath目录下的所有jar和class等
+
+三、ClassLoader的加载机制
+Java的加载机制是双亲委派机制来加载类，
+
+为什么要使用这种方式？这个是为了保证 如果加载的类是一个系统类，那么会优先由Bootstrap ClassLoader 、Extension ClassLoader先去加载，而不是使用我们自定义的ClassLoader去加载，保证系统的安全！
+
+这三种类加载器存在父子关系，App ClassLoader的父类加载器是Extension ClassLoader,Extension ClassLoader的父类加载器是Bootstrap ClassLoader,要注意的一点是,这里的父子并不是继承关系

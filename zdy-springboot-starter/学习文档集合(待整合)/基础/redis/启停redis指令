@@ -1,0 +1,17 @@
+停止带有密码的redis服务: ./redis-cli -h 192.168.143.143 -p 6379 -a xfwl shutdown
+启动带有密码的redis服务: ./redis-server redis.conf
+进入redis的cli客户端：./redis-cli -h 192.168.143.143 -p 6379 -a xfwl
+查看redis进程：ps -ef|grep redis
+
+一键启动redis服务和sentinel服务：redis-server redis.conf ;redis-sentinel sentinel.conf ;
+
+进入redis-cli客户端的控制台后，输入info指令，就可以看到当前redis服务的信息，包括主从角色身份，和细节配置。
+
+查看redis版本信息：
+[root@www bin]# redis-server --version
+Redis server v=5.0.4 sha=00000000:0 malloc=jemalloc-5.1.0 bits=64 build=5628b315d8209a95
+
+查看info信息：redis-cli -h 192.168.143.143 -p 6379 -a xfwl info
+
+
+

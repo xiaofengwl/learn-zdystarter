@@ -1,0 +1,20 @@
+————————————————————————————————————————————————————
+☸☸获取SpringBoot配置文件信息的3中方式.txt☸☸
+————————————————————————————————————————————————————
+第一种：
+    /**
+     * 注入环境对象
+     */
+    @Autowired
+    private Environment env;
+
+    通过：env.getProperty("spring.application.name")即可
+
+第二种：
+    @Value("${spring.application.name}")
+
+第三种：
+    自定义配置类：
+    @ConfigurationProperties(prefix="spring.application")
+    @Componment
+

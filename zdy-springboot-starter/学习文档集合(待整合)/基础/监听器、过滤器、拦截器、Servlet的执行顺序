@@ -1,0 +1,19 @@
+————————————————————————————————————————————————————
+☸☸SERVLET、过滤器、监听器、拦截器 一个请求的执行过程☸☸
+————————————————————————————————————————————————————
+context-param
+-->listener
+-->filter
+-->DispatcherServlet
+-->interceptor(拦截器)
+-->Controller(控制器)
+
+
+context-param：就是一些需要初始化的配置，放入context-param中，从而被监听器（这里特指org.springframework.web.context.ContextLoaderListener）监听，然后加载；
+监听器(listener)：就是对项目起到监听的作用，它能感知到包括request(请求域)，session(会话域)和applicaiton(应用程序)的初始化和属性的变化；
+
+过滤器(filter)：就是对请求起到过滤的作用，它在监听器之后，作用在servlet之前，对请求进行过滤；
+
+servlet：就是对request和response进行处理的容器，它在filter之后执行，servlet其中的一部分就是controller层（标记为servlet_2），还包括渲染视图层(标记为servlet_3)和进入controller之前系统的一些处理部分(servlet_1)，另外我们把servlet开始的时刻标记为servlet_0，servlet结束的时刻标记为servlet_4。
+
+拦截器(interceptor)：就是对请求和返回进行拦截，它作用在servlet的内部，控制器之间也会被拦截

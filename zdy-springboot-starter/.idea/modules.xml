@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../code-generator-master/code-generator-api/code-generator-api.iml" filepath="$PROJECT_DIR$/../../code-generator-master/code-generator-api/code-generator-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../com-zdy_spring_cloud/com-zdy-spring-cloud.iml" filepath="$PROJECT_DIR$/../com-zdy_spring_cloud/com-zdy-spring-cloud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../lis/lis.iml" filepath="$PROJECT_DIR$/../../lis/lis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sayhello-spring-boot-starter-autoconfigurer/sayhello-spring-boot-starter-autoconfigurer.iml" filepath="$PROJECT_DIR$/../sayhello-spring-boot-starter-autoconfigurer/sayhello-spring-boot-starter-autoconfigurer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../zdy-consul-consumer/zdy-consul-consumer.iml" filepath="$PROJECT_DIR$/../zdy-consul-consumer/zdy-consul-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zdy-springboot-starter.iml" filepath="$PROJECT_DIR$/zdy-springboot-starter.iml" />
+    </modules>
+  </component>
+</project>

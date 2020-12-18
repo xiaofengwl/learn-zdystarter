@@ -1,0 +1,3 @@
+# Project exclude paths
+/zdy-eureka/target/
+/zdy-springboot-starter/target/

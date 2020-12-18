@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="com-zdy-spring-cloud" />
+        <module name="com-zdy_spring_cloud" />
+        <module name="maven_self_starter" />
+        <module name="sayhello-spring-boot-starter" />
+        <module name="sayhello-spring-boot-starter-autoconfigurer" />
+        <module name="zdy-consul-consumer" />
+        <module name="zdy-eureka" />
+        <module name="zdy-eureka-client" />
+        <module name="zdy-springboot-starter" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="com-zdy-spring-cloud" target="1.8" />
+      <module name="com-zdy_spring_cloud" target="1.8" />
+      <module name="maven_self_starter" target="1.5" />
+      <module name="sayhello-spring-boot-starter" target="1.8" />
+      <module name="sayhello-spring-boot-starter-autoconfigurer" target="1.8" />
+      <module name="sayhello-spring-boot-starter-zuul" target="1.5" />
+      <module name="zdy-consul-consumer" target="1.8" />
+      <module name="zdy-eureka" target="1.8" />
+      <module name="zdy-eureka-client" target="1.6" />
+      <module name="zdy-springboot-starter" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

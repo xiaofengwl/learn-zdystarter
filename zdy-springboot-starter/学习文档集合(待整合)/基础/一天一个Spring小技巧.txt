@@ -1,0 +1,45 @@
+★★★★★2020-09-01★★★★★★
+1、如何自定义创建Bean，然后注入IOC
+①第一种：
+    //基础对象准备：
+    BeanDefinitionRegistry beanDefinitionRegistry=.....通过Spring内置的接口机制，获取该对象
+
+    //第一步：创建builder
+    BeanDefinitionBuilder builder=BeanDefinitionBuilder.genericBeanDefinition(指定类型.class)
+    //第二步：设置bean信息(指定类型中的信息设置+BeanDefinition基本属性设置)
+    builder.addPropertyValue("keyProperty1","具体的数据值");
+    builder.addPropertyValue("keyProperty2","具体的数据值");
+    builder.addPropertyValue("keyProperty3","具体的数据值");
+    ...
+    builder.setAutowireMode(AbstractBeanDefintion.AUTOWIRE_BY_TYPE);
+    builder.setPrimary(true);
+    ....
+    //第三步：注册到IOC中
+    beanDefinitionRegistry.registryBeanDefinition("beanName",builder.getBeanDefinition);
+
+②第二种：
+    //基础对象准备
+    BeanDefinitionRegistry beanDefinitionRegistry=.....通过Spring内置的接口机制，获取该对象
+
+    //第一步：创建Bean代理对象：
+    GenericBeanDefinition beanDefinition=new GenericBeanDefinition();
+    beanDefinition.setBeanClass(指定类型.class);
+    //设置构造方法的参数
+    beanDefinition.getConstructArgumentValues().addGenericArgumentValue(packageScan);
+    beanDefinition.setRole(BeanDefinition.ROLE_INFRASTRUCTURE);
+    //第二步：注册到IOC中
+    beanDefinitionRegistry.registryBeanDefinition("beanName",builder.getBeanDefinition);
+
+
+★★★★★2020-09-02★★★★★★
+    //根据类全路径名称获取对象
+    GenericApplicationContext applicationContext=(GenericApplicationContext)BeanUtils.instantiateClass("org.springframework.context.annotation.AnnotationConfigApplicationContext")
+
+    //可以直接通过applicationContext获取BeanFactory,然后操作Bean的添加、或者添加BeanPostProcessor等等操作
+    applicationContext.getBeanFactory().registerSingleton("beanName",obj引用对象)
+
+    //判断一个类是否是一个接口的子类，断言的判断方式
+    Assert.isInstanceOf(指定具体接口.class,目标对象obj);
+
+
+

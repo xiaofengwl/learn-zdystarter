@@ -1,0 +1,60 @@
+Zuul网关：
+Spring Cloud Zuul大家可以理解为一个集网关（路由）、负载均衡、校验过滤、结合服务治理框架、
+请求转发时熔断机制、服务聚合等 一系列功能。我们可以将Zuul当成一个门面，所有外部请求都经过Zuul的转
+发到具体的服务实例，减少了每个服务之间互相鉴权代码冗余问题，统一交给Zuul进行鉴权，在此基础上集成上
+边说的高级功能。路由功能相当于反向代理。
+
+===================================================================================
+                        接入网关-做分发处理
+===================================================================================
+以spring-cloud-zuul网关为案例：
+第一步：引入相关的依赖
+<!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-zuul -->
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+    <version>2.2.2.RELEASE</version>
+</dependency>
+
+和
+
+<!-- https://mvnrepository.com/artifact/com.marcosbarbero.cloud/spring-cloud-zuul-ratelimit -->
+<dependency>
+    <groupId>com.marcosbarbero.cloud</groupId>
+    <artifactId>spring-cloud-zuul-ratelimit</artifactId>
+    <version>2.4.0.RELEASE</version>
+</dependency>
+
+和
+
+<dependency>
+    <groupId>org.springframework.retry</groupId>
+    <artifactId>spring-retry</artifactId>
+</dependency>
+
+第二步：配置3个类(网关执行流程按照以下顺序)
+DispatcherFilter.java               （1）收到调用者的请求，做分发处理
+CommonFallBackProvider.java         （2）分发异常，做熔断降级处理
+PostFilter.jara                     （3）分发结果，响应调用者
+
+第三步：配置applicaion.properties
+#添加Spring-Cloud-Zuul的网关路径
+zuul.routes.getway.path=/getway/*   （1）配置网关uri
+zuul.retryable=true                 （2）启动重试连接
+spring.cloud.loadblancer.retry.enabled=true
+hystrx.command.default.execution.isolation.thread.tieoutInMilliseconds=210000
+
+
+第四步：启动注解
+@EnableZuulProxy						//启动zuul网关
+
+
+===================================================================================
+                        接出网关-做调用
+===================================================================================
+
+
+
+
+
+

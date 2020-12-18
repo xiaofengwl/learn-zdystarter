@@ -1,0 +1,10 @@
+使用方式：
+1、同步
+        @HystrixCommand
+        public String hystrixTest(String p1){}
+
+2、异步
+        @HystrixCommand
+        public Future<String> asynchystrixResponse(String name) {}
+
+3、区别和使用选择：

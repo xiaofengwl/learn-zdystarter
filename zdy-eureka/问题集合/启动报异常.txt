@@ -1,0 +1,8 @@
+1、启动报：java.lang.NoSuchMethodError: org.springframework.boot.builder.SpringApplicationBuilder.<init>([Ljava/lang/Object;)V
+  处理方法：
+     修改pom中的父工程的版本号：由2.2.2调整为<version>1.5.4.RELEASE</version>
+  处理结果：
+     已解决，可以正常启动。
+  以后如何避免，关注官网，找准spring cloud的稳定版本套件，配套使用即可。
+
+  其实也可以更改 eureka-server的版本号去适应父工程的版本号：2.2.2

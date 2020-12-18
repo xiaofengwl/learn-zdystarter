@@ -1,0 +1,19 @@
+--导入指令（复制即可直接执行）
+mvn install:install-file -Dmaven.repo.local=E:/IED_ws/IDE_Respotion  -Dfile=E:/IED_ws/maven_workspaces/maven_self_starter/sayhello-spring-boot-starter-autoconfigurer/target/sayhello-spring-boot-starter-autoconfigurer-0.0.1-SNAPSHOT.jar  -DgroupId=com.zdy.mystarter   -DartifactId=sayhello-spring-boot-starter-autoconfigurer -Dversion=0.0.1-SNAPSHOT -Dpackaging=jar
+
+
+--参数格式化
+mvn install:install-file
+-Dmaven.repo.local=E:/IED_ws/IDE_Respotion
+-Dfile=E:/IED_ws/maven_workspaces/maven_self_starter/sayhello-spring-boot-starter-autoconfigurer/target/sayhello-spring-boot-starter-autoconfigurer-0.0.1-SNAPSHOT.jar
+-DgroupId=com.zdy.mystarter
+-DartifactId=sayhello-spring-boot-starter-autoconfigurer
+-Dversion=0.0.1-SNAPSHOT
+-Dpackaging=jar
+
+--对应参考信息：
+<groupId>com.zdy.mystarter</groupId>
+<artifactId>sayhello-spring-boot-starter-autoconfigurer</artifactId>
+<version>0.0.1-SNAPSHOT</version>
+
+

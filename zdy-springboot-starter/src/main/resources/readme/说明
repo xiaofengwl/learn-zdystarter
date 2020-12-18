@@ -1,0 +1,40 @@
+一、说下SpringBoot默认映射的文件夹有:
+classpath:/META-INF/resources
+classpath:/resources
+classpath:/static
+classpath:/public
+
+上面这几个都是静态资源的映射路径，优先级顺序为：META-INF/resources > resources > static > public
+我们可以通过修改spring.mvc.static-path-pattern来修改默认的映射**
+
+二、跨域访问资源
+参考网址：
+    -->[1]、https://www.jianshu.com/p/3ecad199308f   ————利用跨域资源共享CORS解决跨域问题————
+    -->[2]、
+1、对于跨域常见的解决方案一般会想到以下几种方案
+解决方案：
+（1）使用jsonp。
+（2）修改document.domain跨子域
+（3）iframe
+（4）反向代理
+（5）跨域资源共享CORS
+2、利用跨域资源共享CORS解决跨域问题
+    首先CORS需要浏览器和服务器同时支持。
+（1）浏览器直接发出CORS请求。在头信息之中，增加一个Origin字段。Origin字段用来说明，本次请求来自哪个源。
+     服务器根据这个值，决定是否同意这次请求。
+（2）服务器返回一个正常的http回应。浏览器查看回应的头信息没有包含Access-Control-Allow-Origin字段，
+    检查自己是否所处其中。若不在其中，抛出一个错误，被XMLHttpRequest的onerror回调函数捕获。若在其中，则CORS请求成功。
+（3）Access-Control-Allow-Origin字段是html5新增的一项标准功能，因此 IE10以下版本的浏览器是不支持的，
+    因此，如果要求兼容IE9或更低版本的ie浏览器，会导致使用此种方式的跨域请求以及传递Cookie的计划夭折
+
+
+
+
+
+
+
+
+
+
+
+

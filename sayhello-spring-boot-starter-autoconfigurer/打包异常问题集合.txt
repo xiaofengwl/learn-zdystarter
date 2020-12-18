@@ -1,0 +1,9 @@
+1、关于Springboot打包错误的问题 | Failed to execute goal org.springframework.boot:spring-boot-maven-plugin
+
+解决方案参考：https://www.cnblogs.com/coder-lzh/p/8878192.html
+
+2、compile或者install 报各种找不到符号，但是可以确认类都存在？？？
+解决方案：
+    在IDEA工具中：操作菜单：Build->Rebuild Project即可！亲测有效！
+
+
