@@ -1,0 +1,4 @@
+IOC容器的初始化过程包含三个步骤：
+第一步：BeanDefinition的Resource资源定位过程。
+第二步：BeanDefinition的载入和解析过程。
+第三步：BeanDefinition被注入到IOC容器中的过程。

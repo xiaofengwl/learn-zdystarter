@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zdy.mystarter.intergration.mapper.basic.BasicMapper">
+
+    <!-- 通用查询结果列：-1 -->
+    <sql id="st_columns">
+        st_id,st_name,st_age,st_ren,st_others,st_email,st_address,st_sex,st_teacher_id
+    </sql>
+    <sql id="teacher_columns">
+        t_id,t_name,t_sex,t_address,t_course_id
+    </sql>
+    <sql id="course_columns">
+        c_id,c_name,c_address,c_ren
+    </sql>
+    <sql id="teacher_course_columns">
+        t_id,t_name,t_sex,t_address,c_id,c_name,c_address,c_ren
+    </sql>
+    <!-- 普通关系映射-1-->
+    <resultMap id="stuMap" type="com.zdy.mystarter.model.basic.StudentVo">
+        <id column="st_id" jdbcType="VARCHAR" property="stId"/>
+        <result column="st_name"    jdbcType="VARCHAR" property="stName"/>
+        <result column="st_age"     jdbcType="VARCHAR" property="stAge"/>
+        <result column="st_ren"     jdbcType="VARCHAR" property="stRen"/>
+        <result column="st_others"  jdbcType="VARCHAR" property="stOthers"/>
+        <result column="st_email"   jdbcType="VARCHAR" property="stEmail"/>
+        <result column="st_address" jdbcType="VARCHAR" property="stAddress"/>
+        <result column="st_sex"     jdbcType="VARCHAR" property="stSex"/>
+    </resultMap>
+
+    <resultMap id="courseMap" type="com.zdy.mystarter.model.basic.CourseVo">
+        <id column="c_id" jdbcType="INTEGER" property="cId"/>
+        <result column="c_name"    jdbcType="VARCHAR" property="cName"/>
+        <result column="c_ren"     jdbcType="VARCHAR" property="cRen"/>
+        <result column="c_address"     jdbcType="VARCHAR" property="cAddress"/>
+    </resultMap>
+
+    <!-- 关系映射-2-（一对一）:模式1-不用select -->
+    <resultMap id="teacherMap" type="com.zdy.mystarter.model.basic.TeacherVo">
+        <id column="t_id"          jdbcType="INTEGER" property="tId"/>
+        <result column="t_name"    jdbcType="VARCHAR" property="tName"/>
+        <result column="t_sex"     jdbcType="VARCHAR" property="tSex"/>
+        <result column="t_address" jdbcType="VARCHAR" property="tAddress"/>
+        <association property="course" column="t_course_id" autoMapping="true"
+                     javaType="com.zdy.mystarter.model.basic.CourseVo">
+        </association>
+    </resultMap>
+
+    <!-- 关系映射-3-（一对一）:模式1-使用select -->
+    <resultMap id="teacherMapBySelect" type="com.zdy.mystarter.model.basic.TeacherVo">
+        <id column="t_id"          jdbcType="INTEGER" property="tId"/>
+        <result column="t_name"    jdbcType="VARCHAR" property="tName"/>
+        <result column="t_sex"     jdbcType="VARCHAR" property="tSex"/>
+        <result column="t_address" jdbcType="VARCHAR" property="tAddress"/>
+        <!--column="t_course_id"不能少。此列的值作为参数
+            传递给要引用的select语句。select属性指定要引用的select语句-->
+        <association property="course"  column="t_course_id"
+                     autoMapping="true" select="qryCourseInfoByCId">
+        </association>
+    </resultMap>
+
+    <!-- 关系映射-4-（一对一 and 一对多）:模式1-不用select -->
+    <resultMap id="teacherAllMap" type="com.zdy.mystarter.model.basic.TeacherVo">
+        <id     column="t_id"      jdbcType="INTEGER" property="tId"/>
+        <result column="t_name"    jdbcType="VARCHAR" property="tName"/>
+        <result column="t_sex"     jdbcType="VARCHAR" property="tSex"/>
+        <result column="t_address" jdbcType="VARCHAR" property="tAddress"/>
+        <association column="t_course_id" property="course" autoMapping="true"
+                     javaType="com.zdy.mystarter.model.basic.CourseVo">
+        </association>
+        <collection column="t_id" property="students" autoMapping="true"
+                    javaType="java.util.ArrayList" ofType="com.zdy.mystarter.model.basic.StudentVo">
+        </collection>
+    </resultMap>
+
+    <!-- 关系映射-5-（一对一 and 一对多）:模式1-使用select -->
+    <resultMap id="teacherAllMap2" type="com.zdy.mystarter.model.basic.TeacherVo">
+        <id column="t_id"          jdbcType="INTEGER" property="tId"/>
+        <result column="t_name"    jdbcType="VARCHAR" property="tName"/>
+        <result column="t_sex"     jdbcType="VARCHAR" property="tSex"/>
+        <result column="t_address" jdbcType="VARCHAR" property="tAddress"/>
+        <!--column="t_course_id"不能少。此列的值作为参数
+            传递给要引用的select语句。select属性指定要引用的select语句-->
+        <association property="course"  column="t_course_id"
+                     autoMapping="true" select="qryCourseInfoByCId">
+        </association>
+        <collection column="t_id" property="students" autoMapping="true"
+                    javaType="java.util.ArrayList" ofType="com.zdy.mystarter.model.basic.StudentVo"
+                    select="qryStudentInfoByStID">
+        </collection>
+    </resultMap>
+
+    <!-- [1]查询单表集合 -->
+    <select id="qryAllStudentVoList"
+            parameterType="com.zdy.mystarter.model.basic.StudentVo"
+            resultType="com.zdy.mystarter.model.basic.StudentVo">
+        SELECT
+             <include refid="st_columns"/>
+        FROM student
+        <where>
+            1=1
+            <if test="(stId !=null and stId != '') or (stTeacherId !=null and stTeacherId != '')">
+              AND st_id = #{stId,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY st_id ASC
+    </select>
+
+    <!-- [2]查询单表集合 -->
+    <select id="qryAllStudentVoList2"
+            parameterType="com.zdy.mystarter.model.basic.StudentVo"
+            resultMap="stuMap">
+        SELECT
+        <include refid="st_columns"/>
+        FROM student
+        <where>
+            1=1
+            <if test=" stId !=null and stId != ''" >
+                AND st_id = #{stId,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY st_id ASC
+    </select>
+
+    <!-- [3]查询多表集合(一对一关联)-不用select  -->
+    <select id="qryAllTeacherVoList" resultMap="teacherMap"
+            parameterType="com.zdy.mystarter.model.basic.TeacherVo" >
+        SELECT
+            <include refid="teacher_course_columns"/>
+        FROM teacher ,course
+        <where>
+            1=1
+            AND c_id=t_course_id
+            <if test=" tId !=null and tId != ''">
+                AND t_id = #{tId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <!-- [4]查询多表集合(一对一关联)-使用select  -->
+    <select id="qryAllTeacherVoList2" resultMap="teacherMapBySelect"
+            parameterType="com.zdy.mystarter.model.basic.TeacherVo" >
+        SELECT
+        <include refid="teacher_columns"/>
+        FROM teacher
+        <where>
+            1=1
+            <if test=" tId !=null and tId != ''">
+                AND t_id = #{tId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <select id="qryCourseInfoByCId" resultMap="courseMap"
+            parameterType="com.zdy.mystarter.model.basic.CourseVo">
+        SELECT
+            <include refid="course_columns"/>
+        FROM course
+        <where>
+            1=1
+            <!--使用参数：_parameter  代替参数变量 cId
+                   如果使用：cId != null ,会报异常
+                   There is no getter for property named 'cId' in 'class java.lang.Integer
+                 处理方案：
+                       使用统一参数代替：_parameter
+             -->
+
+            <if test=" _parameter != null ">
+                AND c_id = #{cId}
+            </if>
+        </where>
+    </select>
+
+    <!-- [5]查询多表集合(一对一关联 and 一对多)-不用select  -->
+    <select id="qryAllTeacherVoListAllWayWithoutSelect" resultMap="teacherAllMap"
+            parameterType="com.zdy.mystarter.model.basic.TeacherVo" >
+        SELECT
+             <include refid="teacher_course_columns"/>,
+             <include refid="st_columns"/>
+        FROM teacher ,course,student
+        <where>
+            1=1
+            AND c_id=t_course_id
+            AND st_teacher_id=t_id
+            <if test=" tId !=null and tId != ''">
+                AND t_id = #{tId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <!-- [6]查询多表集合(一对一关联)-使用select  -->
+    <select id="qryAllTeacherVoListAllWayWithSelect" resultMap="teacherAllMap2"
+            parameterType="com.zdy.mystarter.model.basic.TeacherVo" >
+        SELECT
+        <include refid="teacher_columns"/>
+        FROM teacher
+        <where>
+            1=1
+            <if test=" tId !=null and tId != ''">
+                AND t_id = #{tId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+    <select id="qryStudentInfoByStID" resultMap="stuMap"
+            parameterType="com.zdy.mystarter.model.basic.StudentVo">
+        SELECT
+        <include refid="st_columns"/>
+        FROM student
+        <where>
+            1=1
+            <!--使用参数：_parameter  代替参数变量 stTeacherId
+                   如果使用：stTeacherId != null ,会报异常
+                   There is no getter for property named 'stTeacherId' in 'class java.lang.Integer
+                 处理方案：
+                       使用统一参数代替：_parameter
+             -->
+
+            <if test=" _parameter != null ">
+                AND st_teacher_id = #{stTeacherId}
+            </if>
+        </where>
+    </select>
+
+
+    <!-- 新增数据-1-事务处理测试 -->
+    <insert id="insertOneTeacherInfo" parameterType="com.zdy.mystarter.model.basic.TeacherVo">
+           INSERT INTO teacher
+           <trim prefix="(" suffix=")" suffixOverrides=",">
+               <if test="tId !=null ">t_id,</if>
+               <if test="tName !=null ">t_name,</if>
+               <if test="tSex !=null ">t_sex,</if>
+               <if test="tAddress !=null ">t_address,</if>
+               <if test="tCourseId !=null ">t_course_id,</if>
+           </trim>
+           <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+               <if test="tId !=null ">#{tId,jdbcType=INTEGER},</if>
+               <if test="tName !=null ">#{tName,jdbcType=VARCHAR},</if>
+               <if test="tSex !=null ">#{tSex,jdbcType=VARCHAR},</if>
+               <if test="tAddress !=null ">#{tAddress,jdbcType=VARCHAR},</if>
+               <if test="tCourseId !=null ">#{tCourseId,jdbcType=INTEGER},</if>
+           </trim>
+    </insert>
+
+    <!-- 新增数据-2-事务处理测试 -->
+    <insert id="insertOneCourseInfo" parameterType="com.zdy.mystarter.model.basic.CourseVo">
+            INSERT INTO course
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="cId !=null ">c_id,</if>
+                <if test="cName !=null ">c_name,</if>
+                <if test="cAddress !=null ">c_address,</if>
+                <if test="cRen !=null ">c_ren,</if>
+            </trim>
+            <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+                <if test="cId !=null ">#{cId,jdbcType=INTEGER},</if>
+                <if test="cName !=null ">#{cName,jdbcType=VARCHAR},</if>
+                <if test="cAddress !=null ">#{cAddress,jdbcType=VARCHAR},</if>
+                <if test="cRen !=null ">#{cRen,jdbcType=VARCHAR},</if>
+            </trim>
+    </insert>
+
+    <!-- 新增数据-3-事务处理测试  注意处理结尾的,符号 -->
+    <sql id="st_columns_values">
+        <trim suffix="" suffixOverrides=",">
+            #{param.stId},
+            #{param.stName},
+            #{param.stAge},
+            #{param.stRen},
+            #{param.stOthers},
+            #{param.stEmail},
+            #{param.stAddress},
+            #{param.stSex},
+            #{param.stTeacherId},
+        </trim>
+    </sql>
+    <!-- mybatis批量处理 固定格式-ON DUPLICATE KEY UPDATE为Mysql特有语法，是个坑-->
+    <sql id="st_columns_values_on_duplicate">
+        <trim suffix="" suffixOverrides=",">
+            st_id=VALUES(st_id),
+            st_name=VALUES(st_name),
+            st_age=VALUES(st_age),
+            st_ren=VALUES(st_ren),
+            st_others=VALUES(st_others),
+            st_email=VALUES(st_email),
+            st_address=VALUES(st_address),
+            st_sex=VALUES(st_sex),
+            st_teacher_id=VALUES(st_teacher_id),
+        </trim>
+    </sql>
+    <insert id="insertMoreStudentInfo">
+        INSERT INTO student( <include refid="st_columns"/> ) VALUES
+        <foreach collection="stuList" item="param" separator=",">
+            ( <include refid="st_columns_values"/> )
+         </foreach>
+        ON DUPLICATE KEY UPDATE   <!-- 批量更新指令：ON DUPLICATE KEY UPDATE为Mysql特有语法 -->
+        <include refid="st_columns_values_on_duplicate"/>
+    </insert>
+
+
+
+
+
+
+</mapper>

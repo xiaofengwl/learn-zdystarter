@@ -1,0 +1,21 @@
+===========================================================================
+                         如何在工程中使用Eureka
+===========================================================================
+第一步：
+首先需要添加 Eureka 的依赖，代码如下所示。
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+</dependency>
+
+
+
+
+第二步：修改配置文件
+启动类不需要修改，因为 @EnableZuulProxy 已经自带了 @EnableDiscoveryClient。
+只需要在配置文件中增加 Eureka 的地址即可：
+
+eureka.client.serviceUrl.defaultZone=http://zhangsan:123456@localhost:8761/eureka/
+
+重启服务，我们可以通过默认的转发规则来访问 Eureka 中的服务。访问规则是“API 网关地址+访问的服务名称+接口 URI”。
+
